@@ -1,0 +1,222 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/home" routerLink="/home/booking">Search Flights </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking" routerLink="/home/booking">Booking Flight </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking/history" routerLink="/home/booking/history">Booking History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking/manage" routerLink="/home/booking/manage">Manage Booking</a>
+      </li>
+    </ul>
+    <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Portfolio Item Heading -->
+  <h3 class="my-4 purple">Review
+    <small>Your booking</small>
+  </h3>
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-12 box-content">
+      <div class="row">
+        <div class="col col-lg-3">
+          <strong><span>{{this.flightDetails.airlineName}}</span></strong> <br>
+          <strong><span>{{this.flightDetails.airlineCode}}</span></strong>
+        </div>
+        <div class="col col-lg-3">
+          <strong><span>{{this.tripDetails.from}}</span></strong><br>
+          <strong><span>{{this.flightDetails.depatureTime}}</span></strong><br>
+          <strong><span>{{this.tripDetails.depature}}</span></strong>
+        </div>
+        <div class="col col-lg-3">
+          <strong><span>{{this.tripDetails.to}}</span></strong><br>
+          <strong><span>{{this.flightDetails.arrivalTime}}</span></strong><br>
+          <strong><span>{{this.flightDetails.return}}</span></strong>
+        </div>
+        <div class="col col-lg-3">
+          <strong><span>Duration: {{this.flightDetails.duration}}</span> </strong><br>
+          <strong><span>Meal Fare</span> </strong><br>
+          <strong><span>Economy</span></strong><br>
+          <strong><span>15kgs</span></strong>
+        </div>
+      </div>
+      <br>
+      <div class="alert alert-primary" role="alert">
+        Note: This is a special No Meal fare provided by the airline
+      </div>
+      <br><br>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <!-- Related Projects Row -->
+  <h3 class="my-4 purple">Traveller Details</h3>
+  <div class="row">
+    <div class="col-md-8 box-content" style="max-height:420px">
+      <div class="alert alert-info" role="alert">
+        Note: Your booking details will be sent to this email address and mobile number.
+      </div>
+      <div class="container">
+        <div class="col-lg-8 well">
+          <div class="row">
+            <form [formGroup]="bookingForm">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6"> <label for="firstName">First Name</label>
+                    <input type="text" placeholder="Enter First Name Here.." class="form-control"
+                      formControlName="firstName"> <span>
+                      <div
+                        *ngIf="bookingForm.controls['firstName'].invalid && (bookingForm.controls['firstName'].dirty || bookingForm.controls['firstName'].touched)"
+                        class="text-danger">
+                        <div *ngIf="bookingForm.controls['firstName'].errors">
+                          FirstName is required.
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-6"> <label>Last Name</label>
+                    <input type="text" placeholder="Enter Last Name Here.." class="form-control"
+                      formControlName="lastName"> <span>
+                      <div
+                        *ngIf="bookingForm.controls['lastName'].invalid && (bookingForm.controls['lastName'].dirty || bookingForm.controls['lastName'].touched)"
+                        class="text-danger">
+                        <div *ngIf="bookingForm.controls['lastName'].errors">
+                          LastName is required.
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-6"> <label>Phone Number</label>
+                    <input type="text" placeholder="Enter Phone Number Here.." class="form-control"
+                      formControlName="contactNumber"> <span>
+                      <div
+                        *ngIf="bookingForm.controls['contactNumber'].invalid && (bookingForm.controls['contactNumber'].dirty || bookingForm.controls['contactNumber'].touched)"
+                        class="text-danger">
+                        <div *ngIf="bookingForm.controls['contactNumber'].errors">
+                          Phonenumber is required.
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-6"> <label>Email Address</label>
+                    <input type="text" placeholder="Enter Email Address Here.." class="form-control"
+                      formControlName="email" ngModel [email]="true"> <span>
+                      <div
+                        *ngIf="bookingForm.controls['email'].invalid && (bookingForm.controls['email'].dirty || bookingForm.controls['email'].touched)"
+                        class="text-danger">
+                        <div *ngIf="bookingForm.controls['email'].errors">
+                          EmailId is required.
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-warning" (click)="addTraveller(bookingForm)">Add</button>
+                <br><br>
+              </div>
+            </form>
+            <div style="width:420px; height:100px; overflow:auto;">
+              <table class="table table-striped table-dark" id="travellerTbl" *ngIf="this.travellerList.length > 0">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let value of this.travellerList">
+                    <td>{{value.firstName}}</td>
+                    <td>{{value.lastName}}</td>
+                    <td>{{value.contactNumber}}</td>
+                    <td>{{value.email}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-4">
+      <div class="card bg-light mb-3">
+        <div class="card-header bg-success text-white text-uppercase">Fare Details</div>
+        <div class="card-body">
+          <ul>
+            <li class="list" type="number"><span class="pull-left">Base Fare of 1 Traveller</span><span
+                class="pull-right"><i class="fa fa-rupee"></i>
+                {{this.flightDetails.price }}</span></li>
+            <br>
+            <li class="list" type="number"><span class="pull-left">You Pay</span>
+              <span class="pull-right" *ngIf="this.travellerList.length == 0"> <i
+                  class="fa fa-rupee"></i>{{this.flightDetails.price }}</span>
+              <span class="pull-right" *ngIf="this.travellerList.length > 0"> <i
+                  class="fa fa-rupee"></i>{{this.flightDetails.price }}</span>
+            </li>
+          </ul>
+          <br><br>
+          <div class="col-md-6 action" [formGroup]="couponForm">
+            <strong><label for="coupon">Apply Coupon</label></strong>
+            <select class="form-control" type="text" formControlName="coupon">
+              <option *ngFor="let value of this.couponList" value="{{value.couponValue}}">{{value.couponName}}</option>
+            </select>
+          </div><br><button type="button" class="btn btn-info"
+            (click)="applyCoupon(this.flightDetails.price,couponForm.value)">Apply</button>
+          <br> <br>
+          <div *ngIf="displayMessage" class="alert alert-success" role="alert">Coupon Applied!!!</div>
+          <div *ngIf="displayMessage"><strong>
+              <h5 class="purple">Final Amount <span class="pull-right">{{this.couponApplied}}</span></h5>
+            </strong></div>
+          <button type="button" class="btn btn-danger" (click)="confirmBooking()">Proceed to
+            Payment</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="col-md-4 box-content" style="min-height:450px">
+      <h4 class="my-3">Fare Details</h4>
+      <ul>
+        <li class="list" type="number"><span class="pull-left">Base Fare of 1 Traveller</span><span
+            class="pull-right"><i class="fa fa-rupee"></i>
+            {{this.flightDetails.price }}</span></li>
+        <br>
+        <li class="list" type="number"><span class="pull-left">You Pay</span>
+          <span class="pull-right" *ngIf="this.travellerList.length == 0"> <i
+              class="fa fa-rupee"></i>{{this.flightDetails.price }}</span>
+          <span class="pull-right" *ngIf="this.travellerList.length > 0"> <i
+              class="fa fa-rupee"></i>{{this.flightDetails.price }}</span>
+        </li>
+      </ul>
+      <br>
+      <div class="col-md-6 action" [formGroup]="couponForm">
+        <strong><label for="coupon">Apply Coupon</label></strong>
+        <select class="form-control" type="text" formControlName="coupon">
+          <option *ngFor="let value of this.couponList" value="{{value.couponValue}}">{{value.couponName}}</option>
+        </select>
+      </div><br><button type="button" class="btn btn-info"
+        (click)="applyCoupon(this.flightDetails.price,couponForm.value)">Apply</button>
+      <br> <br>
+      <div *ngIf="displayMessage" class="alert alert-success" role="alert">Coupon Applied!!!</div>
+      <div *ngIf="displayMessage"><strong>
+          <h5 class="purple">Final Amount <span class="pull-right">{{this.couponApplied}}</span></h5>
+        </strong></div>
+      <button type="button" class="btn btn-danger" (click)="confirmBooking()">Proceed to
+        Payment</button>
+    </div>
+  </div>
+</div> -->

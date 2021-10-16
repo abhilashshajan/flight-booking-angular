@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="/dashboard" routerLink="/dashboard">Manage Airlines</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/schedule" routerLink="/dashboard/schedule">Manage Schedules</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/coupon" routerLink="/dashboard/coupon">Manage Coupons</a>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+    </div>
+</nav>
+
+<form [formGroup]="airlineForm">
+    <div class="form-group">
+        <div class="row pad-l-15 pad-t-10">
+                <input type="hidden" class="form-control" id="id" formControlName="id">
+            <div class="col-md-2"> <label for="airlineName">Airline Name</label>
+                <input type="text" class="form-control" id="airlineName" formControlName="airlineName">
+                <div *ngIf="airlineForm.controls['airlineName'].invalid && (airlineForm.controls['airlineName'].dirty || airlineForm.controls['airlineName'].touched)"
+                class="text-danger">
+                    <div *ngIf="airlineForm.controls['airlineName'].errors">
+                        Airline Name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"> <label for="airlineCode">Airline Code</label>
+                <input type="text" class="form-control" id="airlineCode" formControlName="airlineCode">
+                <div *ngIf="airlineForm.controls['airlineCode'].invalid && (airlineForm.controls['airlineCode'].dirty || airlineForm.controls['airlineCode'].touched)"
+                class="text-danger">
+                    <div *ngIf="airlineForm.controls['airlineCode'].errors?.required">
+                        Airline code is required.
+                    </div>
+                    <div *ngIf="airlineForm.controls['airlineCode'].errors?.minlength || airlineForm.controls['airlineCode'].errors?.maxlength">
+                        Airline code should be 2 character.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"> <label for="contactNumber">Contact Number</label>
+                <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber">
+                <div *ngIf="airlineForm.controls['contactNumber'].invalid && (airlineForm.controls['contactNumber'].dirty || airlineForm.controls['contactNumber'].touched)"
+                class="text-danger">
+                    <div *ngIf="airlineForm.controls['contactNumber'].errors?.required">
+                        Contact is required.
+                    </div>
+                    <div *ngIf="airlineForm.controls['contactNumber'].errors?.pattern">
+                        Invalid contact.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="showAddBtn">
+                <br>
+                <button type="button" class="btn btn-success" (click)="addAirline(airlineForm)">Add Airline</button>
+            </div>
+            <div class="col-md-2" *ngIf="!showAddBtn">
+                <br>
+                <button type="button" class="btn btn-primary" (click)="updateAirline(airlineForm)">Update Airline</button>
+            </div>
+            <div class="col-md-2" *ngIf="!showAddBtn">
+                <br>
+                <button type="button" class="btn btn-info" (click)="resetForm()">Reset</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="page-content container">
+    <div class="container px-0">
+        <div class="row mt-4">
+            <div class="col-12 col-lg-10 offset-lg-1">
+                <div class="mt-4" id="booking-details">
+                    <div class="row text-600 text-white bgc-default-tp1 py-25">
+                        <div class="col-3">Airline Name</div>
+                        <div class="col-3">Airline Code</div>
+                        <div class="col-3">Contact Number</div>
+                        <div class="col-3">Actions</div>
+                    </div>
+                    <div class="text-95 text-secondary-d3 airline-table-content">
+                        <div class="row mb-2 mb-sm-0 py-25 div-row" *ngFor="let value of airlineList">
+                            <div class="col-3">{{value.airlineName}}</div>
+                            <div class="col-3">{{value.airlineCode}}</div>
+                            <div class="col-3">{{value.contactNumber}}</div>
+                            <div class="col-3">
+                                <button class="btn btn-warning btn-sm" (click)="copyContentToFields(value)">Edit</button> &nbsp;
+                                <button class="btn btn-danger btn-sm" (click)="deleteAirline(value)">Delete</button>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

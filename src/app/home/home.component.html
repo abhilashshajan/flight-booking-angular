@@ -1,0 +1,138 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/home" routerLink="/home">Search Flights </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking" routerLink="/home/booking">Booking Flight </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking/history" routerLink="/home/booking/history">Booking History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home/booking/manage" routerLink="/home/booking/manage">Manage Booking</a>
+      </li>      
+    </ul>
+    <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+  </div>
+</nav>
+<div class="container-fluid fluid-custom">
+
+  <form #searchFlightForm="ngForm" (ngSubmit)="searchFlights(searchFlightForm)">
+    <div class="form-row justify-content-center">
+      <div class="form-group col-sm-10">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="booking" id="inlineRadio1" value="oneway"
+            (change)="changeBooking($event)" [(ngModel)]="booking">
+          <label class="form-check-label" for="inlineRadio1">One Way</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="booking" id="inlineRadio2" value="roundtrip"
+            (change)="changeBooking($event)" [(ngModel)]="booking">
+          <label class="form-check-label" for="inlineRadio2">Round Trip</label>
+        </div>       
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-2"> <label for="inputCity">From</label>
+          <select id="inputState" class="form-control" name="from" ngModel>
+            <option value="Bangalore">Bangalore, Bengaluru International Airport</option>
+            <option value="Chennai">Chennai, Chennai International Airport</option>
+            <option value="Mumbai">Mumbai, Chhatrapati Shivaji International Airport</option>
+            <option value="Kochi">Kochi, Cochin International Airport</option>
+            <option value="Cuddapah">Cuddapah, Cuddapah Airport</option>
+            <option value="Goa">Goa, Dabolim Airport</option>
+            <option value="Gwalior">Gwalior, Gwalior Airport</option>
+            <option value="Hyderabad">Hyderabad, Hyderabad International Airport</option>
+            <option value="Jodhpur">Jodhpur, Jodhpur Airport</option>
+            <option value="Madurai">Madurai, Madurai Airport</option>
+            <option value="Neyveli">Neyveli, Neyveli Airport</option>
+            <option value="Raipur">Raipur, Raipur Airport</option>
+            <option value="Salem">Salem, Salem Airport</option>
+            <option value="Srinagar">Srinagar, Srinagar Airport</option>
+            <option value="Surat">Surat, Surat Airport</option>
+            <option value="Trivandrum">Trivandrum, Thiruvananthapuram International Airport</option>
+            <option value="Tuticorin">Tuticorin, Tuticorin Airport</option>
+            <option value="Vishakhapatnam">Vishakhapatnam, Vishakhapatnam Airport</option>
+            <option value="Warangal">Warangal, Warangal Airport</option>
+          </select>
+        </div>
+        <div class="col-md-2"> <label for="inputState">To</label>
+          <select id="inputState" class="form-control" name="to" ngModel>
+            <option value="Agatti Island">Agatti Island, Agatti Island Airport</option>
+            <option value="Ahmedabad">Ahmedabad, Ahmedabad Airport </option>
+            <option value="Bagdogra">Bagdogra, Bagdogra Airport</option>
+            <option value="Bareli">Bareli, Bareli Airport</option>
+            <option value="Bangalore">Bangalore, Bengaluru International Airport</option>
+            <option value="Chennai">Chennai, Chennai International Airport</option>
+            <option value="Mumbai">Mumbai, Chhatrapati Shivaji International Airport</option>
+            <option value="Kochi">Kochi, Cochin International Airport</option>
+            <option value="Cuddapah">Cuddapah, Cuddapah Airport</option>
+            <option value="Goa">Goa, Dabolim Airport</option>
+            <option value="Gwalior">Gwalior, Gwalior Airport</option>
+            <option value="Hyderabad">Hyderabad, Hyderabad International Airport</option>
+            <option value="Jodhpur">Jodhpur, Jodhpur Airport</option>
+            <option value="Madurai">Madurai, Madurai Airport</option>
+            <option value="Neyveli">Neyveli, Neyveli Airport</option>
+            <option value="Raipur">Raipur, Raipur Airport</option>
+            <option value="Salem">Salem, Salem Airport</option>
+            <option value="Srinagar">Srinagar, Srinagar Airport</option>
+            <option value="Surat">Surat, Surat Airport</option>
+            <option value="Trivandrum">Trivandrum, Thiruvananthapuram International Airport</option>
+            <option value="Tuticorin">Tuticorin, Tuticorin Airport</option>
+            <option value="Vishakhapatnam">Vishakhapatnam, Vishakhapatnam Airport</option>
+            <option value="Warangal">Warangal, Warangal Airport</option>
+          </select>
+        </div>
+        <div class="col-md-2"> <label for="depature">Depature</label>
+          <input  class="form-control" placeholder="Choose Date" id="datepicker" bsDatepicker name="depature" ngModel>
+        </div>
+        <div class="col-md-2"> <label for="return">Return</label>
+          <input  class="form-control" placeholder="Choose Date" id="datepicker" bsDatepicker [disabled]="exampleFlag"
+            name="return" ngModel>
+        </div>
+        <div class="col-md-2"> <label for="inputState">Traveller</label>
+          <input type="number" class="form-control" name="traveller" id="replyNumber" min="0"
+            data-bind="value:replyNumber" ngModel />
+        </div>
+        <div class="col-md-2">
+          <br>
+          <button type="submit" class="btn btn-warning">Search</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="panel panel-primary justify-content-center" *ngIf="edited">
+  <div class="panel-heading">
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>Flight Name</th>
+          <th>Depature Time</th>
+          <th>Arrival Time</th>
+          <th>Duration</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.airlineName}}-{{flight.airlineCode}}</td>
+          <td>{{flight.depatureTime}}</td>
+          <td>{{flight.arrivalTime}}</td>
+          <td>{{flight.duration}}</td>
+          <td><i class="fa fa-rupee"></i>{{flight.price}}</td>
+          <td>
+            <button class="btn btn-success" style="margin-left: 10px" (click)="bookFlight(flight)">Book</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

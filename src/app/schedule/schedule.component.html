@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="/dashboard" routerLink="/dashboard">Manage Airlines</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/schedule" routerLink="/dashboard/schedule">Manage Schedules</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard/coupon" routerLink="/dashboard/coupon">Manage Coupons</a>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+    </div>
+</nav>
+
+<form [formGroup]="scheduleForm">
+    <div class="form-group col-lg-12">
+        <div class="form-group row" style="margin-left: 30px;">
+            <div class="col-md-2"> <label for="airlineName">Flight Name</label>
+                <select id="inputState" class="form-control" id="airlineName" formControlName="airlineName" #mySelect
+                    (change)='onOptionsSelected(mySelect.value)'>
+                    <option value="default">Choose option</option>
+                    <option *ngFor="let value of this.airlineList" value="{{value.airlineName}}">{{value.airlineName}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2"> <label for="flightCode">Flight Code</label>
+                <select id="inputState" class="form-control" id="airlineCode" formControlName="airlineCode">
+                    <option value="default">Choose option</option>
+                    <option *ngFor="let code of this.airlineCode" value="{{code.airlineCode}}">{{code.airlineCode}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2"> <label for="from">From</label>
+                <input type="text" class="form-control" id="from" formControlName="origin">
+            </div>
+            <div class="col-md-2"> <label for="to">To</label>
+                <input type="text" class="form-control" id="to" formControlName="destination">
+            </div>
+            <div class="col-md-2">
+                <label for="frequency">Frequency</label>
+                <select class="form-control" type="text" formControlName="frequency">
+                    <option value="" disabled="" selected="">Frequency</option>
+                    <option value="Daily">Daily</option>
+                    <option value="WeekEnds">WeekEnds</option>
+                    <option value="WeekDays">WeekDays</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="depaturetime">Depature Time</label>
+                <input type="time" class="form-control" id="depaturetime" formControlName="depatureTime">
+            </div>
+            <div class="col-md-2">
+                <label for="arrivaltime">Arival Time</label>
+                <input type="time" class="form-control" id="arrivaltime" formControlName="arrivalTime">
+            </div>
+            <div class="col-md-2"> <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" formControlName="price" />
+            </div>
+            <div class="col-md-2">
+                <br>
+                <button type="button" class="btn btn-success" (click)="saveScheduleAirline(scheduleForm)">Schedule
+                    Airline</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<br><br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">SNO</th>
+            <th scope="col">Flight Name</th>
+            <th scope="col">Flight Code</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Frequency</th>
+            <th scope="col">Depature Time</th>
+            <th scope="col">Arrival Time</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let value of this.scheduleList">
+            <th scope="row">{{value.id}}
+            </th>
+            <td>{{value.airlineName}}</td>
+            <td>{{value.airlineCode}}</td>
+            <td>{{value.origin}}</td>
+            <td>{{value.destination}}</td>
+            <td>{{value.frequency}}</td>
+            <td>{{value.depatureTime}}</td>
+            <td>{{value.arrivalTime}}</td>
+            <td>{{value.price}}</td>
+            <td><button class="btn btn-info btn-sm" (click)="openModal(editProfileModal, value)">Edit</button> &nbsp;
+                <button class="btn btn-danger btn-sm" (click)="deleteSchedule(value)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #editProfileModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Update Schedule</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="updateScheduleForm" (ngSubmit)="updateSchedule(updateScheduleForm)">
+            <div class="form-group col-lg-12">
+                <input type="text" class="form-control" formControlName="id" id="id" hidden>
+                <div class="form-group row" style="margin-left: 30px;">
+                    <div class="col-md-6"> <label for="airlineName">Flight Name</label>
+                        <input type="text" class="form-control" id="airlineName" formControlName="airlineName">
+                    </div><br>
+                    <div class="col-md-6"> <label for="flightCode">Flight Code</label>
+                        <input type="text" class="form-control" id="airlineCode" formControlName="airlineCode">
+                    </div>
+                    <br>
+                    <div class="col-md-6"> <label for="from">From</label>
+                        <input type="text" class="form-control" id="from" formControlName="origin">
+                    </div><br>
+                    <div class="col-md-6"> <label for="to">To</label>
+                        <input type="text" class="form-control" id="to" formControlName="destination">
+                    </div><br>
+                    <div class="col-md-6">
+                        <label for="frequency">Frequency</label>
+                        <select class="form-control" type="text" formControlName="frequency">
+                            <option value="Daily">Daily</option>
+                            <option value="WeekEnds">WeekEnds</option>
+                            <option value="WeekDays">WeekDays</option>
+                        </select>
+                    </div><br>
+                    <div class="col-md-6">
+                        <label for="depaturetime">Depature Time</label>
+                        <input type="time" class="form-control" id="depaturetime" formControlName="depatureTime">
+                    </div><br>
+                    <div class="col-md-6">
+                        <label for="arrivaltime">Arival Time</label>
+                        <input type="time" class="form-control" id="arrivaltime" formControlName="arrivalTime">
+                    </div><br>
+                    <div class="col-md-6"> <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" formControlName="price" />
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <br>
+                        <button type="button" class="btn btn-success" (click)="updateScheduleAirline(updateScheduleForm)">Schedule Airline</button>
+                    </div> -->
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

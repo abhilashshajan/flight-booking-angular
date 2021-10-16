@@ -1,0 +1,145 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home" routerLink="/home">Search Flights </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/booking" routerLink="/home/booking">Booking Flight </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home/booking/history" routerLink="/home/booking/history">Booking History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/home/booking/manage" routerLink="/home/booking/manage">Manage
+                    Booking</a>
+            </li>
+        </ul>
+        <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+    </div>
+</nav>
+<div class="page-content container">
+    <div class="container px-0">
+        <div class="row mt-4">
+            <div class="col-12 col-lg-10 offset-lg-1">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center text-150">
+                            <i class="fa fa-ticket fa-2x text-success-m2 mr-1" aria-hidden="true"></i>
+                            <span class="text-default-d3">Manage your booked ticket.Download,View and Cancel your
+                                ticket</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="alert alert-warning" role="alert">
+                        Note: Cancel option enabled only before 24 hrs of onboarding
+                    </div>
+                </div>
+                <hr class="row brc-default-l1 mx-n1 mb-4" />
+
+                <div class="mt-4" id="booking-details">
+                    <table class="table table-fixed table-condensed" style="width: 120%;border: 3px solid #2394a2">
+                        <thead class="text-600 text-white bgc-default-tp1 py-25">
+                            <tr>
+                                <th scope="col">Flight Name</th>
+                                <th scope="col">Origin</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Travel Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="clickableRow" id="bookingDetailsSection"
+                                *ngFor="let value of this.manageDetails">
+                                <td>{{value.airlineName}} - {{value.airlineCode}}</td>
+                                <td>{{value.origin}}</td>
+                                <td>{{value.destination}}</td>
+                                <td>{{value.travelDate}}</td>
+                                <td>{{value.status}}</td>
+                                <td><button class="btn btn-primary btn-sm"
+                                        (click)="openModal(viewBookingDetails,value)">View
+                                        Details</button>&nbsp;<span> <button class="btn btn-warning btn-sm"
+                                            *ngIf="check"
+                                            (click)="cancelBooking(value,value.pnrNumber)">Cancel</button></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #viewBookingDetails let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="editProfileLabel">Booking Details</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-white mb-5">
+                        <div class="card-heading clearfix border-bottom mb-4">
+                        </div>
+                        <div class="card-body" id="bookingdetails" *ngFor="let details of this.manageDetails">
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">PNR
+                                        NO:</span></strong>
+                                <span class="bg-light-blue"> {{details.pnrNumber}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Name:</span></strong>
+                                <span class="bg-light-blue"> {{this.travellerDetails[0].firstName}}
+                                    {{this.travellerDetails[0].lastName}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Email:</span></strong>
+                                <span class="bg-light-blue"> {{this.travellerDetails[0].email}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span
+                                        class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Contact:</span></strong>
+                                <span class="bg-light-blue"> {{this.travellerDetails[0].contactNumber}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Flight
+                                        Name</span></strong>
+                                <span class="bg-light-blue"> {{details.airlineName}} - {{details.airlineCode}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span
+                                        class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Location:</span></strong>
+                                <span class="bg-light-blue"> {{details.origin}} - {{details.destination}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Booked
+                                        date</span></strong>
+                                <span class="bg-light-blue"> {{details.travelDate}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong><span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Price:
+                                    </span></strong>
+                                <i class="fa fa-rupee"></i><span class="bg-light-blue"> {{details.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+            <button type="submit" class="btn btn-primary" (click)="openPDF()">Download</button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,100 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #121213;">
+	<div class="collapse navbar-collapse" id="navbarText">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link active" href="/dashboard" routerLink="/dashboard">Manage Airlines</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/dashboard/schedule" routerLink="/dashboard/schedule">Manage Schedules</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/dashboard/coupon" routerLink="/dashboard/coupon">Manage Coupons</a>
+			</li>
+		</ul>
+		<button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row" style="padding-top: 50px;">
+		<div class="main">
+			<form role="form" [formGroup]="couponForm">
+				<div class="form-group">
+					<label for="couponname">Coupon Name</label>
+					<input type="text" class="form-control" id="couponname" formControlName="couponName">
+				</div>
+				<div class="form-group">
+					<label for="couponvalue">Discount Value(%)</label>
+					<input type="text" class="form-control" id="couponvalue" formControlName="couponValue">
+				</div>
+				<br>
+				<button type="submit" class="btn btn btn-success" (click)="saveCoupon(couponForm)">
+					Save
+				</button>
+			</form>
+
+		</div>
+
+	</div>
+</div>
+
+<div class="page-content container">
+	<div class="container px-0">
+		<div class="row mt-4">
+			<div class="col-12 col-lg-10 offset-lg-1">
+				<div class="mt-4" id="booking-details">
+					<div class="row text-600 text-white bgc-default-tp1 py-25">
+						<div class="col-2">SNO</div>
+						<div class="col-2">Coupon Name</div>
+						<div class="col-2">Discount Value(%)</div>
+						<div class="col-2">Actions</div>
+					</div>
+					<div class="text-95 text-secondary-d3">
+						<div class="row mb-2 mb-sm-0 py-25" *ngFor="let value of this.couponDetails;index as i;">
+							<div class="col-2">{{value.id}}
+							</div>
+							<div class="col-2">{{value.couponName}}</div>
+							<div class="col-2">{{value.couponValue}}</div>
+							<div class="col-4"><button class="btn btn-info btn-md"
+									(click)="openModal(editProfileModal, value)">Edit</button> &nbsp;
+								<button class="btn btn-danger btn-md" (click)="deleteCoupon(value)">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #editProfileModal let-modal>
+	<div class="modal-header">
+		<h5 class="modal-title" id="editProfileLabel">Update Coupon</h5>
+		<button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="modal-body">
+		<form [formGroup]="updateCouponForm" (ngSubmit)="updateCoupon(updateCouponForm)">
+			<div class="form-group row">
+				<input type="text" class="form-control" formControlName="id" id="id" hidden>
+				<label for="firstname" class="col-sm-4 col-form-label">Coupon Name</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" formControlName="couponName" id="couponName">
+				</div>
+			</div>
+			<br>
+			<div class="form-group row">
+				<label for="lastname" class="col-sm-4 col-form-label">Coupon value</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" formControlName="couponValue" id="couponValue">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+		</form>
+	</div>
+</ng-template>

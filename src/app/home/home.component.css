@@ -1,0 +1,11 @@
+.fluid-custom{
+    left: 14%;
+    top: 10%;
+    height: 150px;
+    background: -webkit-linear-gradient(left, #42275a , #734b6d);
+    color:white
+}
+
+.nav-link{
+    color: #ffe9a8;
+}
