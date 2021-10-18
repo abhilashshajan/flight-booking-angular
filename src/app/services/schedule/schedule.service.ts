@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
-import { Schedule } from '../../model/schedule.model';
+import { FlightSchedule } from '../../model/schedule.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class ScheduleService {
   token:any;
   constructor(private http: HttpClient) { }
 
-  saveScheduleDetails(scheduleDetails:Schedule){
+  saveScheduleDetails(scheduleDetails:FlightSchedule){
     let header = new HttpHeaders()
     .set('Content-type','application/json')
     .set('Authorization','Bearer '+ sessionStorage.getItem("authToken") ||'')
@@ -25,10 +25,10 @@ export class ScheduleService {
     .set('Content-type','application/json')
     .set('Authorization','Bearer '+ sessionStorage.getItem("authToken") ||'')
     .set('Access-Control-Allow-Origin','*');
-    return this.http.get<Schedule>(`${this.baseUrl}`,{headers:header});
+    return this.http.get<FlightSchedule>(`${this.baseUrl}`,{headers:header});
   }
 
-  updateSchedule(id:any, data:Schedule) {
+  updateSchedule(id:any, data:FlightSchedule) {
     let header = new HttpHeaders()
     .set('Content-type','application/json')
     .set('Authorization','Bearer '+ sessionStorage.getItem("authToken") ||'')
@@ -37,7 +37,7 @@ export class ScheduleService {
     return this.http.put(`${this.baseUrl}/${id}`, data,{headers:header});
   }
 
-  deleteSchedule(id:any,data:Schedule) {
+  deleteSchedule(id:any,data:FlightSchedule) {
     let header = new HttpHeaders()
     .set('Content-type','application/json')
     .set('Authorization','Bearer '+ sessionStorage.getItem("authToken") ||'')

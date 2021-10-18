@@ -117,6 +117,21 @@ hr {
 .my-6{
     margin-right: 220px;
 }
-/* .px-0{
-  margin-right: 180px;
-} */
+.multiselect-dropdown {
+  background-color: white !important;
+}
+
+.table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-left: 45px;
+}
+.table td, .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table tr:nth-child(even){background-color: #f2f2f2;}
+
+.table tr:hover {background-color: #ddd;}

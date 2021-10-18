@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   airlineList:Array<Airline> = [];
   showAddBtn:boolean = true;
 
-  constructor(private fb: FormBuilder,private restCall:RestcallService,private authService: AuthenticationService) {
+  constructor(private fb: FormBuilder, private restCall:RestcallService, private authService: AuthenticationService) {
     this.airlineForm = fb.group({
       id: [''],
       airlineName: ['', Validators.required],

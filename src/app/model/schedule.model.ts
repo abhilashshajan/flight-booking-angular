@@ -1,24 +1,32 @@
-export class Schedule {
+export class FlightSchedule {
 
     id:number;
-    airlineName: string;
-    airlineCode: string;
-    origin: string;
-    destination: string;
+    airlineId: number;
+    flightNumber: string;
+    departureAirport: string;
+    arrivalAirport: string;
     frequency: string;
-    depatureTime: Date;
+    departureTime: Date;
     arrivalTime: Date;
-    price: string
+    aircraftRegistration: string;
+    seatCount: number;
+    price: string;
+    updatedBy: string;
+    updatedTime: Date;
 
-    constructor(id: number, airlineName: string, airlineCode: string, origin: string, destination: string, frequency: string, depatureTime: Date, arrivalTime: Date,price:string) {
+    constructor(id: number, airlineId: number, flightNumber: string, departureAirport: string, arrivalAirport: string, frequency: string, departureTime: Date, arrivalTime: Date, aircraftRegistration: string, seatCount: number, ticketPrice:string, updatedBy: string, updatedTime: Date) {
         this.id = 0;
-        this.airlineName = airlineName;
-        this.airlineCode = airlineCode;
-        this.origin =  origin;
-        this.destination = destination;
+        this.airlineId = airlineId;
+        this.flightNumber = flightNumber;
+        this.departureAirport =  departureAirport;
+        this.arrivalAirport = arrivalAirport;
         this.frequency = frequency;
-        this.depatureTime = depatureTime;
+        this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
-        this.price = price
+        this.aircraftRegistration = aircraftRegistration;
+        this.seatCount = seatCount;
+        this.price = ticketPrice;
+        this.updatedBy = updatedBy;
+        this.updatedTime = updatedTime;
     }
 }

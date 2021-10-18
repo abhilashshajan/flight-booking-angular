@@ -4,9 +4,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/home" routerLink="/home">Search Flights </a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="/home/booking" routerLink="/home/booking">Booking Flight </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="/home/booking/history" routerLink="/home/booking/history">Booking History</a>
       </li>
@@ -36,65 +36,37 @@
     </div>
     <div class="form-group">
       <div class="row">
-        <div class="col-md-2"> <label for="inputCity">From</label>
-          <select id="inputState" class="form-control" name="from" ngModel>
-            <option value="Bangalore">Bangalore, Bengaluru International Airport</option>
-            <option value="Chennai">Chennai, Chennai International Airport</option>
-            <option value="Mumbai">Mumbai, Chhatrapati Shivaji International Airport</option>
-            <option value="Kochi">Kochi, Cochin International Airport</option>
-            <option value="Cuddapah">Cuddapah, Cuddapah Airport</option>
-            <option value="Goa">Goa, Dabolim Airport</option>
-            <option value="Gwalior">Gwalior, Gwalior Airport</option>
-            <option value="Hyderabad">Hyderabad, Hyderabad International Airport</option>
-            <option value="Jodhpur">Jodhpur, Jodhpur Airport</option>
-            <option value="Madurai">Madurai, Madurai Airport</option>
-            <option value="Neyveli">Neyveli, Neyveli Airport</option>
-            <option value="Raipur">Raipur, Raipur Airport</option>
-            <option value="Salem">Salem, Salem Airport</option>
-            <option value="Srinagar">Srinagar, Srinagar Airport</option>
-            <option value="Surat">Surat, Surat Airport</option>
-            <option value="Trivandrum">Trivandrum, Thiruvananthapuram International Airport</option>
-            <option value="Tuticorin">Tuticorin, Tuticorin Airport</option>
-            <option value="Vishakhapatnam">Vishakhapatnam, Vishakhapatnam Airport</option>
-            <option value="Warangal">Warangal, Warangal Airport</option>
-          </select>
+        <div class="col-md-2"> <label for="departureAirport">From</label>
+          <ng-multiselect-dropdown id="departureAirport" name="departureAirport" ngModel
+          [placeholder]="'--------select--------'"
+          [settings]="departureAirportDropdownSettings"
+          [data]="departureAirportDropdownList"
+          [(ngModel)]="departureAirportDropdownModel"
+          (onSelect)="onDepartureAirportSelect($event)"
+          (onDeSelect)="onDepartureAirportDeSelect($event)"
+        >
+        </ng-multiselect-dropdown>
         </div>
-        <div class="col-md-2"> <label for="inputState">To</label>
-          <select id="inputState" class="form-control" name="to" ngModel>
-            <option value="Agatti Island">Agatti Island, Agatti Island Airport</option>
-            <option value="Ahmedabad">Ahmedabad, Ahmedabad Airport </option>
-            <option value="Bagdogra">Bagdogra, Bagdogra Airport</option>
-            <option value="Bareli">Bareli, Bareli Airport</option>
-            <option value="Bangalore">Bangalore, Bengaluru International Airport</option>
-            <option value="Chennai">Chennai, Chennai International Airport</option>
-            <option value="Mumbai">Mumbai, Chhatrapati Shivaji International Airport</option>
-            <option value="Kochi">Kochi, Cochin International Airport</option>
-            <option value="Cuddapah">Cuddapah, Cuddapah Airport</option>
-            <option value="Goa">Goa, Dabolim Airport</option>
-            <option value="Gwalior">Gwalior, Gwalior Airport</option>
-            <option value="Hyderabad">Hyderabad, Hyderabad International Airport</option>
-            <option value="Jodhpur">Jodhpur, Jodhpur Airport</option>
-            <option value="Madurai">Madurai, Madurai Airport</option>
-            <option value="Neyveli">Neyveli, Neyveli Airport</option>
-            <option value="Raipur">Raipur, Raipur Airport</option>
-            <option value="Salem">Salem, Salem Airport</option>
-            <option value="Srinagar">Srinagar, Srinagar Airport</option>
-            <option value="Surat">Surat, Surat Airport</option>
-            <option value="Trivandrum">Trivandrum, Thiruvananthapuram International Airport</option>
-            <option value="Tuticorin">Tuticorin, Tuticorin Airport</option>
-            <option value="Vishakhapatnam">Vishakhapatnam, Vishakhapatnam Airport</option>
-            <option value="Warangal">Warangal, Warangal Airport</option>
-          </select>
+        <div class="col-md-2"> <label for="arrivalAirport">To</label>
+          <ng-multiselect-dropdown id="arrivalAirport" name="arrivalAirport" ngModel
+          [placeholder]="'--------select--------'"
+          [settings]="arrivalAirportDropdownSettings"
+          [data]="arrivalAirportDropdownList"
+          [(ngModel)]="arrivalAirportDropdownModel"
+          (onSelect)="onArrivalAirportSelect($event)"
+          (onDeSelect)="onArrivalAirportDeSelect($event)"
+        >
+          </ng-multiselect-dropdown>
         </div>
-        <div class="col-md-2"> <label for="depature">Depature</label>
-          <input  class="form-control" placeholder="Choose Date" id="datepicker" bsDatepicker name="depature" ngModel>
+        <div class="col-md-2"> <label for="departureDate">Depature</label>
+          <input  class="form-control" placeholder="Choose Date" id="datepicker" bsDatepicker name="departureDate" ngModel>
         </div>
-        <div class="col-md-2"> <label for="return">Return</label>
+        <div class="col-md-2"> <label for="returnDate">Return</label>
           <input  class="form-control" placeholder="Choose Date" id="datepicker" bsDatepicker [disabled]="exampleFlag"
-            name="return" ngModel>
+            name="returnDate" ngModel>
         </div>
-        <div class="col-md-2"> <label for="inputState">Traveller</label>
-          <input type="number" class="form-control" name="traveller" id="replyNumber" min="0"
+        <div class="col-md-2"> <label for="passengerCount">Number of Passenger</label>
+          <input type="number" class="form-control" name="passengerCount" id="replyNumber" min="0"
             data-bind="value:replyNumber" ngModel />
         </div>
         <div class="col-md-2">
@@ -114,20 +86,24 @@
       <thead>
         <tr>
           <th>Flight Name</th>
+          <th>From</th>
           <th>Depature Time</th>
+          <th>To</th>
           <th>Arrival Time</th>
-          <th>Duration</th>
+          <th>Duration (Hours)</th>
           <th>Amount</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let flight of flights">
-          <td>{{flight.airlineName}}-{{flight.airlineCode}}</td>
-          <td>{{flight.depatureTime}}</td>
+          <td>{{flight.airline.airlineCode}}-{{flight.flightNumber}}</td>
+          <td>{{flight.departureAirport}}</td>
+          <td>{{flight.departureTime}}</td>
+          <td>{{flight.arrivalAirport}}</td>
           <td>{{flight.arrivalTime}}</td>
           <td>{{flight.duration}}</td>
-          <td><i class="fa fa-rupee"></i>{{flight.price}}</td>
+          <td><i class="fa fa-rupee"></i>{{flight.ticketPrice}}</td>
           <td>
             <button class="btn btn-success" style="margin-left: 10px" (click)="bookFlight(flight)">Book</button>
           </td>

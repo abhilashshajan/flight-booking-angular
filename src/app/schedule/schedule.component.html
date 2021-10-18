@@ -7,9 +7,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard/schedule" routerLink="/dashboard/schedule">Manage Schedules</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="/dashboard/coupon" routerLink="/dashboard/coupon">Manage Coupons</a>
-            </li>
+            </li> -->
         </ul>
         <button type="submit" class="btn btn-info" style="margin-left:55%" (click)="logout()">Logout</button>
     </div>
@@ -17,52 +17,62 @@
 
 <form [formGroup]="scheduleForm">
     <div class="form-group col-lg-12">
-        <div class="form-group row" style="margin-left: 30px;">
-            <div class="col-md-2"> <label for="airlineName">Flight Name</label>
-                <select id="inputState" class="form-control" id="airlineName" formControlName="airlineName" #mySelect
-                    (change)='onOptionsSelected(mySelect.value)'>
-                    <option value="default">Choose option</option>
-                    <option *ngFor="let value of this.airlineList" value="{{value.airlineName}}">{{value.airlineName}}
-                    </option>
-                </select>
+        <div class="form-group row" style="margin-left: 30px;margin-right: 30px;">
+            <div class="col-md-2"> <label for="airline">Airline Code</label>
+                <ng-multiselect-dropdown id="airline" formControlName="airline"
+                [placeholder]="'--------select--------'"
+                [settings]="airlineCodeDropdownSettings"
+                [data]="airlineCodeDropdownList"
+                [(ngModel)]="airlineCodeDropdownModel"
+                (onSelect)="onAirlineCodeSelect($event)"
+                (onDeSelect)="onAirlineCodeDeSelect($event)"
+              >
+              </ng-multiselect-dropdown>
             </div>
-            <div class="col-md-2"> <label for="flightCode">Flight Code</label>
-                <select id="inputState" class="form-control" id="airlineCode" formControlName="airlineCode">
-                    <option value="default">Choose option</option>
-                    <option *ngFor="let code of this.airlineCode" value="{{code.airlineCode}}">{{code.airlineCode}}
-                    </option>
-                </select>
+            <div class="col-md-2"> <label for="flightNumber">Flight Number</label>
+                <input type="number" class="form-control" id="flightNumber" formControlName="flightNumber">
             </div>
-            <div class="col-md-2"> <label for="from">From</label>
-                <input type="text" class="form-control" id="from" formControlName="origin">
+            <div class="col-md-2"> <label for="departureAirport">From</label>
+                <input type="text" class="form-control" id="departureAirport" formControlName="departureAirport">
             </div>
-            <div class="col-md-2"> <label for="to">To</label>
-                <input type="text" class="form-control" id="to" formControlName="destination">
+            <div class="col-md-2"> <label for="arrivalAirport">To</label>
+                <input type="text" class="form-control" id="arrivalAirport" formControlName="arrivalAirport">
             </div>
             <div class="col-md-2">
                 <label for="frequency">Frequency</label>
-                <select class="form-control" type="text" formControlName="frequency">
-                    <option value="" disabled="" selected="">Frequency</option>
-                    <option value="Daily">Daily</option>
-                    <option value="WeekEnds">WeekEnds</option>
-                    <option value="WeekDays">WeekDays</option>
-                </select>
+                <ng-multiselect-dropdown id="frequency" formControlName="frequency"
+                [placeholder]="'--------select--------'"
+                [settings]="frequencyDropdownSettings"
+                [data]="frequencyDropdownList"
+                [(ngModel)]="frequencyDropdownModel"
+                (onSelect)="onFrequencySelect($event)"
+                (onDeSelect)="onFrequencyDeSelect($event)"
+                (onDeSelectAll)="onFrequencyDeSelectAll($event)"
+                (onSelectAll)="onFrequencySelectAll($event)"
+              >
+              </ng-multiselect-dropdown>
             </div>
             <div class="col-md-2">
-                <label for="depaturetime">Depature Time</label>
-                <input type="time" class="form-control" id="depaturetime" formControlName="depatureTime">
+                <label for="depatureTime">Depature Time</label>
+                <input type="time" class="form-control" id="departureTime" formControlName="departureTime">
             </div>
             <div class="col-md-2">
-                <label for="arrivaltime">Arival Time</label>
-                <input type="time" class="form-control" id="arrivaltime" formControlName="arrivalTime">
+                <label for="arrivalTime">Arival Time</label>
+                <input type="time" class="form-control" id="arrivalTime" formControlName="arrivalTime">
             </div>
-            <div class="col-md-2"> <label for="price">Price</label>
-                <input type="number" class="form-control" id="price" formControlName="price" />
+            <div class="col-md-2"> <label for="aircraftRegistration">Aircraft Number</label>
+                <input type="text" class="form-control" id="aircraftRegistration" formControlName="aircraftRegistration" />
+            </div>
+            <div class="col-md-2"> <label for="seatCount">Seat Count</label>
+                <input type="number" class="form-control" id="seatCount" formControlName="seatCount" />
+            </div>
+            <div class="col-md-2"> <label for="ticketPrice">Ticket Price</label>
+                <input type="number" class="form-control" id="ticketPrice" formControlName="ticketPrice" />
             </div>
             <div class="col-md-2">
                 <br>
-                <button type="button" class="btn btn-success" (click)="saveScheduleAirline(scheduleForm)">Schedule
-                    Airline</button>
+                <button type="button" class="btn btn-success" (click)="saveFlightSchedule(scheduleForm)">Save Schedule
+                </button>
             </div>
         </div>
     </div>
@@ -72,30 +82,31 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">SNO</th>
-            <th scope="col">Flight Name</th>
-            <th scope="col">Flight Code</th>
+            <th scope="col">Airline Code</th>
+            <th scope="col">Flight Number</th>
             <th scope="col">From</th>
             <th scope="col">To</th>
             <th scope="col">Frequency</th>
             <th scope="col">Depature Time</th>
             <th scope="col">Arrival Time</th>
-            <th scope="col">Price</th>
+            <th scope="col">Aircraft Number</th>
+            <th scope="col">Seat Count</th>
+            <th scope="col">Ticket Price</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let value of this.scheduleList">
-            <th scope="row">{{value.id}}
-            </th>
-            <td>{{value.airlineName}}</td>
-            <td>{{value.airlineCode}}</td>
-            <td>{{value.origin}}</td>
-            <td>{{value.destination}}</td>
+            <td>{{value.airline.airlineCode}}</td>
+            <td>{{value.flightNumber}}</td>
+            <td>{{value.departureAirport}}</td>
+            <td>{{value.arrivalAirport}}</td>
             <td>{{value.frequency}}</td>
-            <td>{{value.depatureTime}}</td>
+            <td>{{value.departureTime}}</td>
             <td>{{value.arrivalTime}}</td>
-            <td>{{value.price}}</td>
+            <td>{{value.aircraftRegistration}}</td>
+            <td>{{value.seatCount}}</td>
+            <td>{{value.ticketPrice}}</td>
             <td><button class="btn btn-info btn-sm" (click)="openModal(editProfileModal, value)">Edit</button> &nbsp;
                 <button class="btn btn-danger btn-sm" (click)="deleteSchedule(value)">Delete</button>
             </td>
@@ -112,41 +123,64 @@
     </div>
 
     <div class="modal-body">
-        <form [formGroup]="updateScheduleForm" (ngSubmit)="updateSchedule(updateScheduleForm)">
-            <div class="form-group col-lg-12">
+        <form [formGroup]="updateScheduleForm" (ngSubmit)="updateFlightSchedule(updateScheduleForm)">
+            <div class="form-group col-lg-12" style="padding-bottom: 15px;">
                 <input type="text" class="form-control" formControlName="id" id="id" hidden>
-                <div class="form-group row" style="margin-left: 30px;">
-                    <div class="col-md-6"> <label for="airlineName">Flight Name</label>
-                        <input type="text" class="form-control" id="airlineName" formControlName="airlineName">
-                    </div><br>
-                    <div class="col-md-6"> <label for="flightCode">Flight Code</label>
-                        <input type="text" class="form-control" id="airlineCode" formControlName="airlineCode">
+                <div class="form-group row" style="margin-left: 30px; margin-right: 30px;">
+                    <div class="col-md-6"> <label for="airline">Airline Code</label>
+                        <ng-multiselect-dropdown id="airline" formControlName="airline"
+                        [placeholder]="'------select------'"
+                        [settings]="updateAirlineCodeDropdownSettings"
+                        [data]="updateAirlineCodeDropdownList"
+                        [(ngModel)]="updateAirlineCodeDropdownModel"
+                        (onSelect)="onUpdateAirlineCodeSelect($event)"
+                        (onDeSelect)="onUpdateAirlineCodeDeSelect($event)"
+                      >
+                      </ng-multiselect-dropdown>
                     </div>
                     <br>
-                    <div class="col-md-6"> <label for="from">From</label>
-                        <input type="text" class="form-control" id="from" formControlName="origin">
+                    <div class="col-md-6"> <label for="flightNumber">Flight Number</label>
+                        <input type="number" class="form-control" id="flightNumber" formControlName="flightNumber">
+                    </div>
+                    <br>
+                    <div class="col-md-6"> <label for="departureAirport">From</label>
+                        <input type="text" class="form-control" id="departureAirport" formControlName="departureAirport">
                     </div><br>
-                    <div class="col-md-6"> <label for="to">To</label>
-                        <input type="text" class="form-control" id="to" formControlName="destination">
+                    <div class="col-md-6"> <label for="arrivalAirport">To</label>
+                        <input type="text" class="form-control" id="arrivalAirport" formControlName="arrivalAirport">
                     </div><br>
                     <div class="col-md-6">
                         <label for="frequency">Frequency</label>
-                        <select class="form-control" type="text" formControlName="frequency">
-                            <option value="Daily">Daily</option>
-                            <option value="WeekEnds">WeekEnds</option>
-                            <option value="WeekDays">WeekDays</option>
-                        </select>
+                        <ng-multiselect-dropdown id="frequency" formControlName="frequency"
+                            [placeholder]="'------select------'"
+                            [settings]="updateFrequencyDropdownSettings"
+                            [data]="updateFrequencyDropdownList"
+                            [(ngModel)]="updateFrequencyDropdownModel"
+                            (onSelect)="onUpdateFrequencySelect($event)"
+                            (onDeSelect)="onUpdateFrequencyDeSelect($event)"
+                            (onDeSelectAll)="onUpdateFrequencyDeSelectAll($event)"
+                            (onSelectAll)="onUpdateFrequencySelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
                     </div><br>
                     <div class="col-md-6">
                         <label for="depaturetime">Depature Time</label>
-                        <input type="time" class="form-control" id="depaturetime" formControlName="depatureTime">
+                        <input type="time" class="form-control" id="departureTime" formControlName="departureTime">
                     </div><br>
                     <div class="col-md-6">
-                        <label for="arrivaltime">Arival Time</label>
-                        <input type="time" class="form-control" id="arrivaltime" formControlName="arrivalTime">
+                        <label for="arrivalTime">Arival Time</label>
+                        <input type="time" class="form-control" id="arrivalTime" formControlName="arrivalTime">
                     </div><br>
-                    <div class="col-md-6"> <label for="price">Price</label>
-                        <input type="number" class="form-control" id="price" formControlName="price" />
+                    <div class="col-md-6">
+                        <label for="aircraftRegistration">Aircraft Number</label>
+                        <input type="text" class="form-control" id="aircraftRegistration" formControlName="aircraftRegistration">
+                    </div><br>
+                    <div class="col-md-6">
+                        <label for="seatCount">Seat Count</label>
+                        <input type="number" class="form-control" id="seatCount" formControlName="seatCount">
+                    </div><br>
+                    <div class="col-md-6"> <label for="ticketPrice">Ticket Price</label>
+                        <input type="number" class="form-control" id="ticketPrice" formControlName="ticketPrice" />
                     </div>
                     <!-- <div class="col-md-2">
                         <br>

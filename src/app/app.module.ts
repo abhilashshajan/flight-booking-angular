@@ -20,6 +20,7 @@ import { CouponsComponent } from './coupons/coupons.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { AuthInterceptorProviders } from './helper/auth.interceptor';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { AuthInterceptorProviders } from './helper/auth.interceptor';
     BrowserAnimationsModule ,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [DatePipe, AuthInterceptorProviders],
   bootstrap: [AppComponent]

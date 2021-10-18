@@ -9,3 +9,8 @@
 .nav-link{
     color: #ffe9a8;
 }
+
+.multiselect-dropdown {
+    background-color: white !important;
+    color: #212529;
+}
